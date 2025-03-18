@@ -1,19 +1,17 @@
 # madruga
 
-**Retry resiliente com preguiça e bom humor, igual o Seu Madruga.**
+**Resilient retry with laziness.**
 
-Um crate para quem precisa de retentativas com backoff — mas com estilo. `madruga` tenta resolver problemas, mas só até onde vale a pena.
+A crate for those who need retries with backoff — but with style. `madruga` attempts to solve problems, but only as far as it's worth it.
 
-> “Não existe trabalho ruim... ruim é ter que trabalhar!” – Seu Madruga
+## Features
 
-## Recursos
+- Backoff strategies (fixed, exponential, jitter)
+- Ease of use with `retry_async`
+- Optional humorous messages
+- Compatible with `tokio`
 
-- Estratégias de backoff (fixo, exponencial, jitter)
-- Facilidade de uso com `retry_async`
-- Mensagens de humor opcionais
-- Compatível com `tokio`
-
-## Exemplo básico
+## Basic Example
 
 ```rust
 use madruga::{retry_async, RetryStrategy, RetryResult};
@@ -23,26 +21,20 @@ use std::time::Duration;
 #[tokio::main]
 async fn main() {
     let strategy = RetryStrategy::new(5, Backoff::Fixed(Duration::from_secs(1)))
-        .with_humor(true)
-        .with_language(Language::PtBr);
+        .with_language(Language::En);
 
     let result = madruga_retry!(strategy, |attempt| async move {
         if attempt < 3 {
-            Err("Ainda não foi...")
+            Err("Not yet...")
         } else {
-            Ok("Agora sim!")
+            Ok("Now!")
         }
     })
     .await;
 
     match result {
-        RetryResult::Success(val) => println!("Tudo certo: {}", val),
-        RetryResult::Failure(e) => println!("Erro final: {}", e),
+        RetryResult::Success(val) => println!("Success: {}", val),
+        RetryResult::Failure(e) => println!("Final error: {}", e),
     }
 }
-
 ```
-
-## Licença
-
-MIT
