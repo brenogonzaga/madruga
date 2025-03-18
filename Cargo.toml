@@ -1,0 +1,17 @@
+[package]
+name = "madruga"
+version = "0.1.1"
+edition = "2024"
+description = "Retry resiliente com backoff."
+license = "MIT"
+repository = "https://github.com/brenogonzaga/madruga"
+readme = "README.md"
+keywords = ["retry", "backoff", "resilience", "tokio"]
+categories = ["asynchronous", "development-tools", "rust-patterns"]
+
+[dependencies]
+rand = "0.9"
+tokio = { version = "1", features = ["time", "macros", "rt-multi-thread"] }
+log = "0.4"
+black = "0.0.1"
+anyhow = "1.0.97"
